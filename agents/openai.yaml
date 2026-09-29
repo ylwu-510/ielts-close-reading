@@ -1,0 +1,4 @@
+interface:
+  display_name: "ielts-close-reading"
+  short_description: "根据阅读原文和作答制作精读 Word，配句式解析、错题复盘与迁移练习"
+  default_prompt: "使用 $ielts-close-reading，把我的阅读原文、题目和作答整理为适合当前水平的长难句与错题精读 Word。"

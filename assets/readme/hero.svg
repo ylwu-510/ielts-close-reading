@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="280" viewBox="0 0 1200 280" role="img" aria-labelledby="title desc">
+  <title id="title">雅思阅读长难句与错题精读</title>
+  <desc id="desc">保留完整原句，看清修饰与逻辑关系，再用同结构新句练习。生成蓝绿配色的中文精读 Word。</desc>
+  <rect width="1200" height="280" rx="18" fill="#F1F5F7"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans GB', 'PingFang SC', sans-serif">
+    <text x="58" y="48" font-size="20" letter-spacing="2" fill="#53616B">IELTS READING · CLOSE STUDY</text>
+    <text x="58" y="132" font-size="62" font-weight="700" fill="#1F2A32">雅思阅读长难句与错题精读</text>
+    <g font-size="32" font-weight="500">
+      <text x="60" y="200" fill="#29333B">完整原句</text>
+      <text x="218" y="200" fill="#53616B">→</text>
+      <text x="284" y="200" fill="#24546C">关系解析</text>
+      <text x="444" y="200" fill="#53616B">→</text>
+      <text x="510" y="200" fill="#24665E">同结构练习</text>
+    </g>
+    <text x="60" y="246" font-size="19" fill="#53616B">全文选句 · 错题证据 · 词汇表达 · 可编辑 Word</text>
+  </g>
+</svg>

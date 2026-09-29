@@ -1,0 +1,7 @@
+{
+  "fonts": {"cjk": "Hiragino Sans GB", "english": "Georgia", "body": "Arial", "heading": "Avenir Next"},
+  "colors": {"ink": "29333B", "source": "1F2A32", "blue": "24546C", "teal": "24665E", "muted": "53616B", "table_header": "244A60", "table_alternate": "F1F5F7", "table_border": "D9D9D9"},
+  "page": {"width": 8.5, "height": 11, "top": 0.62, "bottom": 0.62, "left": 0.8, "right": 0.8, "footer": 0.27},
+  "size": {"title": 21, "heading1": 16, "heading2": 12, "body": 11.5, "translation": 11, "small": 10, "table": 10.5, "footer": 9},
+  "spacing": {"body_line": 17, "translation_line": 16.5, "paragraph_after": 7, "analysis_after": 4, "heading_before": 12, "heading_after": 7}
+}

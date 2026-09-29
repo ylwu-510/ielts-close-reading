@@ -1,0 +1,259 @@
+{
+  "meta": {
+    "title": "雅思阅读长难句与错题精读",
+    "subtitle": "Finding a Place to Read",
+    "label": "原创演示",
+    "note": "原创短文与虚构作答，仅演示精读格式。A2 表示 A 段第 2 句；练习答案在文末。",
+    "answer_label": "虚构作答"
+  },
+  "source": [
+    {
+      "id": "A",
+      "sentences": [
+        {
+          "id": "A1",
+          "text": "A neighbourhood library opened a reading room beside its entrance, where large windows brought in daylight and helped visitors see the available seats."
+        },
+        {
+          "id": "A2",
+          "text": "Although the architects expected the tables beside the front windows to fill first, readers who stayed for more than an hour usually chose the rear corner, from which they could watch the entrance without being seen by everyone coming in."
+        },
+        {
+          "id": "A3",
+          "text": "Brief interviews suggested that these readers valued a sense of privacy more than the view of the street."
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "sentences": [
+        {
+          "id": "B1",
+          "text": "To understand why a row of chairs near the service desk was rarely used for reading, two staff members observed visitors over six afternoons."
+        },
+        {
+          "id": "B2",
+          "text": "What made these chairs unsuitable for reading was not their distance from the books but the irregular noise of the nearby book-return machine."
+        },
+        {
+          "id": "B3",
+          "text": "Staff also noticed that visitors waiting to meet friends were happy to use these chairs, since they rarely opened a book."
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "sentences": [
+        {
+          "id": "C1",
+          "text": "The library then moved the book-return machine to an alcove away from the reading area."
+        },
+        {
+          "id": "C2",
+          "text": "Rather than replace all the furniture, the manager kept the existing chairs and added low screens that could be moved whenever a group needed a larger space."
+        },
+        {
+          "id": "C3",
+          "text": "A month later, visitors were staying longer in the area near the service desk, although staff had not yet checked whether the change affected book borrowing."
+        }
+      ]
+    }
+  ],
+  "sentences": [
+    {
+      "id": "A2",
+      "title": "预想的位置与读者实际的选择",
+      "translation": "虽然建筑师预期前窗旁的桌子会最先坐满，但停留超过一小时的读者通常会选择后部的角落；在那里，他们既能看见入口，又不会让每个进门的人都看见自己。",
+      "analysis": {
+        "core": [
+          "Although the architects expected X, readers usually chose Y.",
+          "X＝前窗旁的桌子先坐满；Y＝后部的角落。"
+        ],
+        "links": [
+          {
+            "anchor": "expected the tables…to fill first",
+            "relation": "预期的内容：tables → fill first",
+            "detail": "预期先坐满的是前窗旁的桌子；实际选择在后面的 chose 处出现。"
+          },
+          {
+            "anchor": "who stayed for more than an hour",
+            "relation": "修饰 readers，限定读者范围",
+            "detail": "选择后部角落的是停留超过一小时的这类读者，并非文中所有访客。"
+          },
+          {
+            "anchor": "from which",
+            "relation": "接回 the rear corner",
+            "detail": "可还原为 from the rear corner：从这个角落能看见入口。"
+          },
+          {
+            "anchor": "without being seen by everyone coming in",
+            "relation": "被看见的是读者；coming in 修饰 everyone",
+            "detail": "读者能看入口，却不会让所有进门者都看见自己；不是读者看不见进门者。"
+          }
+        ]
+      },
+      "practice": [
+        {
+          "text": "Although the guide expected everyone to gather near the gate, visitors who wanted a clear view chose a small hill, from which they could watch the parade without being pushed by the crowd.",
+          "questions": [
+            "who wanted a clear view 限定所有游客还是其中一类？这类游客实际去了哪里？",
+            "from which 接回哪个地点？without being pushed 表示谁不被谁挤到？"
+          ],
+          "answer": "① 限定想看清楚的那类游客；他们实际选择了小山坡，导游预期的地点则是大门附近。 ② 接回 a small hill；不被人群挤到的是这类游客。by the crowd 说明施加推挤的人群。 译文：虽然导游预期大家会在大门附近集合，但想看清楚的游客选择了一个小山坡；在那里，他们既能看游行，又不会被人群挤到。"
+        }
+      ]
+    },
+    {
+      "id": "B2",
+      "title": "先把原因打包再排除错误解释",
+      "translation": "使这些椅子不适合用来阅读的，并不是它们离书有多远，而是附近还书机不时发出的噪音。",
+      "analysis": {
+        "core": [
+          "[What made these chairs unsuitable for reading] → was → not X but Y.",
+          "X＝离书的距离；Y＝还书机不规律的噪音。"
+        ],
+        "links": [
+          {
+            "anchor": "What made these chairs unsuitable for reading",
+            "relation": "整块作主语；unsuitable 说明 chairs 的状态",
+            "detail": "整块指使这些椅子不适合阅读的因素；到 was 才开始说明这个因素是什么。"
+          },
+          {
+            "anchor": "not their distance…but the irregular noise",
+            "relation": "排除距离，确认噪音",
+            "detail": "作者否定的是距离这一原因，并没有否定椅子不适合阅读这一事实。"
+          },
+          {
+            "anchor": "of the nearby book-return machine",
+            "relation": "补充 noise 的来源",
+            "detail": "噪音来自附近的还书机；irregular 说明声音出现得不规律。"
+          }
+        ]
+      },
+      "practice": [
+        {
+          "text": "What made the online lesson difficult to follow was not the teacher's accent but the frequent breaks in the sound.",
+          "questions": [
+            "What made the online lesson difficult to follow 这一整块在指什么？句子从哪个词开始说明这个因素是什么？",
+            "作者排除了哪个原因，又确认了哪个原因？他有没有否认这节课难以听懂？"
+          ],
+          "answer": "① 指使这节网课难以听懂的因素；从 was 开始说明这个因素是什么。 ② 排除老师的口音，确认声音频繁中断；并没有否认这节课难以听懂。 译文：使这节网课难以听懂的，并不是老师的口音，而是声音频繁中断。"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "title": "保留与添加两项措施里的可移动屏风",
+      "translation": "馆长没有更换所有家具，而是保留了现有的椅子，并增设了低矮的屏风；每当有小组需要更大的空间时，这些屏风都可以移开。",
+      "analysis": {
+        "core": [
+          "Rather than replace…，the manager → kept the chairs ＋ added screens.",
+          "screens ← that could be moved；移动条件＝a group needed a larger space。"
+        ],
+        "links": [
+          {
+            "anchor": "Rather than replace all the furniture",
+            "relation": "未采用的方案：更换所有家具",
+            "detail": "实际做法从 the manager kept 开始；开头并不是说馆长更换了家具。"
+          },
+          {
+            "anchor": "kept the existing chairs and added low screens",
+            "relation": "同一主语的两个并列动作",
+            "detail": "馆长同时做了两件事：保留椅子，以及新增屏风。"
+          },
+          {
+            "anchor": "that could be moved",
+            "relation": "修饰 screens；被移动的是屏风",
+            "detail": "could be moved 表示屏风可以被挪动，不是在说小组或椅子被移动。"
+          },
+          {
+            "anchor": "whenever a group needed a larger space",
+            "relation": "说明何时可以移动屏风",
+            "detail": "每当小组需要更大空间时就可以移动；这里描述可重复使用的安排。"
+          }
+        ]
+      },
+      "practice": [
+        {
+          "text": "Rather than cancel the outdoor class, the teacher kept the original activities and borrowed large umbrellas that could be opened whenever the rain returned.",
+          "questions": [
+            "老师没有采用哪个方案？实际采取了哪两项措施？",
+            "that could be opened 修饰什么？whenever 从句说明什么情况下可以采取这个动作？"
+          ],
+          "answer": "① 没有取消户外课；实际保留了原有活动，并借来了大伞。 ② 修饰 large umbrellas，被打开的是伞；每当又下起雨时，就可以把伞打开。 译文：老师没有取消户外课，而是保留了原有活动，并借来了大伞；每当又下起雨时，就可以把伞撑开。"
+        }
+      ]
+    }
+  ],
+  "reviews": [
+    {
+      "number": "2",
+      "prompt": "a decision to change the arrangement of a space while keeping furniture the library already owned",
+      "user_answer": "B",
+      "correct_answer": "C",
+      "evidence": [
+        {
+          "source_ids": [
+            "C2"
+          ],
+          "explanation": "C2 明确同时交代保留现有椅子与新增可移动屏风；这是保留原有家具的空间调整决定。"
+        }
+      ],
+      "paraphrases": [
+        "furniture the library already owned → the existing chairs：图书馆已有的家具，原文具体指现有椅子。",
+        "keeping → kept：保留下来，未全部更换。",
+        "change the arrangement of a space → added low screens that could be moved：通过新增可移动屏风调整空间安排。"
+      ],
+      "why_selected_fails": "B 段在描述观察到的座椅使用情况，以及噪音为何妨碍阅读；它没有交代任何改动空间的决定，也没有交代改动时保留哪些旧家具。出现 chairs 和 use，并不足以满足题干的两项信息。",
+      "hypothesis": "这位虚构答题者可能抓住了 B 段中的 chairs 与 use，却漏核对题干要求的调整决定和保留旧家具。也可能只是没有读到 C2。",
+      "check": "选 B 时，你依据的是哪一句？那句话是否同时写出了调整决定，以及哪些旧家具被保留？"
+    }
+  ],
+  "vocabulary": [
+    {
+      "term": "rear",
+      "meaning": "后部的",
+      "context": "the rear corner 指后部的角落。"
+    },
+    {
+      "term": "irregular",
+      "meaning": "不规律的",
+      "context": "这里指噪音并非按固定节奏出现。"
+    },
+    {
+      "term": "alcove",
+      "meaning": "凹室",
+      "context": "房间或墙壁一侧凹进去的小空间。"
+    },
+    {
+      "term": "screens",
+      "meaning": "屏风",
+      "context": "此处用于分隔空间，不指电子屏幕。"
+    },
+    {
+      "term": "book borrowing",
+      "meaning": "图书借阅",
+      "context": "这里 borrowing 作名词，指借阅活动。"
+    }
+  ],
+  "expressions": [
+    {
+      "phrase": "a sense of privacy",
+      "meaning": "一种私密感；不等于完全隔音或无人看见。",
+      "example": "The high plants gave the small balcony a sense of privacy.",
+      "translation": "高大的植物让小阳台有了一种私密感。"
+    },
+    {
+      "phrase": "unsuitable for + 名词或动词-ing",
+      "meaning": "不适合某事或某种用途。",
+      "example": "The steep path is unsuitable for cycling.",
+      "translation": "这条陡峭的小路不适合骑车。"
+    },
+    {
+      "phrase": "Rather than + 动词原形，主句说明实际选择",
+      "meaning": "不采用前一做法，而选择主句中的做法。",
+      "example": "Rather than buy a new coat, Mina repaired the old one.",
+      "translation": "米娜没有买新外套，而是修好了旧外套。"
+    }
+  ]
+}
