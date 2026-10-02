@@ -88,6 +88,20 @@ def _exercise_id(entry, index):
     return entry["id"] if len(entry["practice"]) == 1 else f"{entry['id']}.{index + 1}"
 
 
+def _normalized_answer(answer):
+    return " ".join(answer.split()).casefold()
+
+
+def _source_refs(value, path, known_ids):
+    _strings(value, path, 1)
+    seen = set()
+    for i, source_id in enumerate(value):
+        rpath = f"{path}[{i}]"
+        _unique(source_id, seen, rpath)
+        if source_id not in known_ids:
+            _error(rpath, f"unknown source reference {source_id!r}")
+
+
 def validate(data) -> None:
     """Validate all content and references; raise ValueError with a JSON path.
 
@@ -96,10 +110,16 @@ def validate(data) -> None:
     student and correct answers; provenance must still be checked by the author.
     No maximum count is imposed on selected sentences or their exercises.
     """
-    _object(data, "$", ("meta", "source", "sentences", "reviews", "vocabulary", "expressions"), ("checks",))
-    meta = _object(data["meta"], "$.meta", ("title", "subtitle", "label"), ("note", "answer_label"))
+    _object(data, "$", ("meta", "source", "sentences", "vocabulary", "expressions"),
+            ("reviews", "checks", "question_groups", "paraphrases"))
+    meta = _object(data["meta"], "$.meta", ("title", "subtitle", "label"),
+                   ("note", "answer_label", "include_review_sections"))
     for key in meta:
-        _text(meta[key], f"$.meta.{key}")
+        if key == "include_review_sections":
+            if not isinstance(meta[key], bool):
+                _error("$.meta.include_review_sections", "must be a boolean")
+        else:
+            _text(meta[key], f"$.meta.{key}")
 
     paragraph_ids, sentence_ids = set(), set()
     for i, paragraph in enumerate(_list(data["source"], "$.source", 1)):
@@ -168,8 +188,23 @@ def validate(data) -> None:
                 if source_id not in sentence_ids | paragraph_ids:
                     _error(rpath, f"unknown source reference {source_id!r}")
 
+    question_answers, question_numbers = {}, set()
+    for i, group in enumerate(_list(data.get("question_groups", []), "$.question_groups")):
+        path = f"$.question_groups[{i}]"
+        _object(group, path, ("title", "instruction", "items"))
+        for key in ("title", "instruction"):
+            _text(group[key], f"{path}.{key}")
+        for j, item in enumerate(_list(group["items"], path + ".items", 1)):
+            ipath = f"{path}.items[{j}]"
+            _object(item, ipath, ("number", "prompt", "source_ids", "answer", "explanation", "action"))
+            for key in ("number", "prompt", "answer", "explanation", "action"):
+                _text(item[key], f"{ipath}.{key}")
+            _unique(item["number"], question_numbers, ipath + ".number")
+            _source_refs(item["source_ids"], ipath + ".source_ids", sentence_ids | paragraph_ids)
+            question_answers[item["number"]] = _normalized_answer(item["answer"])
+
     review_numbers = set()
-    for i, review in enumerate(_list(data["reviews"], "$.reviews")):
+    for i, review in enumerate(_list(data.get("reviews", []), "$.reviews")):
         path = f"$.reviews[{i}]"
         _object(review, path,
                 ("number", "prompt", "user_answer", "correct_answer", "evidence", "paraphrases", "why_selected_fails"),
@@ -178,8 +213,10 @@ def validate(data) -> None:
             if key in review:
                 _text(review[key], f"{path}.{key}")
         _unique(review["number"], review_numbers, path + ".number")
-        user_answer = " ".join(review["user_answer"].split()).casefold()
-        correct_answer = " ".join(review["correct_answer"].split()).casefold()
+        user_answer = _normalized_answer(review["user_answer"])
+        correct_answer = _normalized_answer(review["correct_answer"])
+        if review["number"] in question_answers and correct_answer != question_answers[review["number"]]:
+            _error(path + ".correct_answer", "conflicts with question_groups answer for the same number")
         # Words such as 'unknown' or 'none' can be legitimate gap-fill answers.
         # Whether a submission was actually observed is an authoring judgment.
         if user_answer == correct_answer:
@@ -196,6 +233,22 @@ def validate(data) -> None:
                     _error(rpath, f"unknown source reference {source_id!r}")
             _text(evidence["explanation"], epath + ".explanation")
         _strings(review["paraphrases"], path + ".paraphrases")
+
+    for i, item in enumerate(_list(data.get("paraphrases", []), "$.paraphrases")):
+        path = f"$.paraphrases[{i}]"
+        _object(item, path, ("origin", "source_ids", "source_text", "target_text", "note"), ("question_numbers",))
+        if item["origin"] not in ("original", "transfer"):
+            _error(path + ".origin", "must be 'original' or 'transfer'")
+        for key in ("source_text", "target_text", "note"):
+            _text(item[key], f"{path}.{key}")
+        _source_refs(item["source_ids"], path + ".source_ids", sentence_ids | paragraph_ids)
+        numbers = item.get("question_numbers", [])
+        _strings(numbers, path + ".question_numbers", 1 if item["origin"] == "original" else 0)
+        if item["origin"] == "transfer" and numbers:
+            _error(path + ".question_numbers", "transfer paraphrases must not claim original question numbers")
+        for j, number in enumerate(numbers):
+            if number not in question_numbers:
+                _error(f"{path}.question_numbers[{j}]", f"unknown original question number {number!r}")
 
     for key, fields in (("vocabulary", ("term", "meaning", "context")),
                         ("expressions", ("phrase", "meaning", "example", "translation"))):
@@ -441,19 +494,35 @@ class _Reader:
         # otherwise most passages would inflate to one sentence per page.
         self.keep_block(start, max_fraction=0.45)
 
+    def question_groups(self):
+        if not self.data.get("question_groups"):
+            return
+        self.h("原题考点与快速核对", new_page=True)
+        for group in self.data["question_groups"]:
+            self.h(group["title"], level=2)
+            self.p(group["instruction"], "Small", keep=True)
+            self.table(["题目", "原文依据与答案", "核对后怎样推进"], [
+                [f"第 {item['number']} 题\n{item['prompt']}",
+                 "原文 " + "、".join(item["source_ids"]) + f"\n答案 {item['answer']}\n{item['explanation']}",
+                 item["action"]]
+                for item in group["items"]
+            ], width_ratios=(.32, .44, .24))
+
     def reviews(self):
-        if not self.data["reviews"]:
+        if not self.data.get("reviews"):
             return
         self.h("错题复盘")
+        mapped_numbers = {item["number"] for group in self.data.get("question_groups", []) for item in group["items"]}
         for review in self.data["reviews"]:
             start = len(self.doc.paragraphs)
             answer_label = self.data["meta"].get("answer_label", "你的答案")
             self.h(f"第 {review['number']} 题  {answer_label} {review['user_answer']}  正确答案 {review['correct_answer']}", level=2)
-            self.en(review["prompt"], keep=True)
-            for evidence in review["evidence"]:
-                self.lead("证据 " + "、".join(evidence["source_ids"]), evidence["explanation"])
-            if review["paraphrases"]:
-                self.lead("题干改写", "；".join(review["paraphrases"]))
+            if review["number"] not in mapped_numbers:
+                self.en(review["prompt"], keep=True)
+                for evidence in review["evidence"]:
+                    self.lead("证据 " + "、".join(evidence["source_ids"]), evidence["explanation"])
+                if review["paraphrases"]:
+                    self.lead("题干改写", "；".join(review["paraphrases"]))
             self.lead("答案对照", review["why_selected_fails"])
             if "hypothesis" in review:
                 self.lead("可能的卡点", review["hypothesis"])
@@ -478,11 +547,29 @@ class _Reader:
             self.questions(check["questions"])
             self.keep_block(start)
 
-    def table(self, headers, rows):
+    def paraphrases(self):
+        if not self.data.get("paraphrases"):
+            return
+        self.h("考点表达与同义改写", new_page=True)
+        for origin, title, target_header in (("original", "原题改写", "原题改写"),
+                                              ("transfer", "原创迁移说法", "原创迁移说法")):
+            items = [item for item in self.data["paraphrases"] if item["origin"] == origin]
+            if not items:
+                continue
+            self.h(title, level=2)
+            rows = []
+            for item in items:
+                references = "原文 " + "、".join(item["source_ids"])
+                if origin == "original":
+                    references += "；原题 " + "、".join(item["question_numbers"])
+                rows.append([item["source_text"], item["target_text"], item["note"] + "\n" + references])
+            self.table(["原文表达", target_header, "关系与使用边界"], rows, width_ratios=(.29, .32, .39))
+
+    def table(self, headers, rows, width_ratios=None):
         a = self.api
         table = self.doc.add_table(rows=1, cols=len(headers))
         table.autofit = False
-        widths = [self.width / 72 * ratio for ratio in (.21, .24, .55)]
+        widths = [self.width / 72 * ratio for ratio in (width_ratios or (.21, .24, .55))]
         for column, width in zip(table.columns, widths):
             column.width = a.Inches(width)
         borders = a.OxmlElement("w:tblBorders")
@@ -520,6 +607,8 @@ class _Reader:
 
     def render(self):
         meta = self.data["meta"]
+        include_reviews = meta.get("include_review_sections", False)
+        printed_checks = self.data.get("checks", []) if include_reviews else []
         self.p(meta["title"], "Title", keep=True)
         self.p(meta["subtitle"], "Reader Subtitle", keep="note" in meta)
         if "note" in meta:
@@ -529,8 +618,11 @@ class _Reader:
         entries = sorted(self.data["sentences"], key=lambda entry: positions[entry["id"]])
         for entry in entries:
             self.sentence(entry, source[entry["id"]])
-        self.reviews()
-        self.checks()
+        if include_reviews:
+            self.question_groups()
+            self.reviews()
+            self.checks()
+        self.paraphrases()
         if self.data["vocabulary"]:
             self.h("阅读词汇与常见改写", new_page=True)
             self.table(["词或词组", "本篇意思", "放回原文理解"],
@@ -545,7 +637,7 @@ class _Reader:
                 self.en(expression["example"], keep=True)
                 self.p(expression["translation"], "Chinese")
                 self.keep_block(start)
-        if any(entry["practice"] for entry in entries) or self.data.get("checks"):
+        if any(entry["practice"] for entry in entries) or printed_checks:
             self.h("练习参考答案", new_page=True)
         for entry in entries:
             if not entry["practice"]:
@@ -558,7 +650,7 @@ class _Reader:
                 else:
                     self.p(exercise["answer"])
             self.keep_block(start)
-        for check in self.data.get("checks", []):
+        for check in printed_checks:
             start = len(self.doc.paragraphs)
             self.h("检查 " + check["id"] + " " + check["title"], level=2)
             self.p(check["answer"])
