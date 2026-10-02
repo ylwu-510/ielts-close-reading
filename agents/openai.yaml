@@ -1,4 +1,4 @@
 interface:
   display_name: "ielts-close-reading"
-  short_description: "制作精简精读 Word，保留长难句、句内考点、真实改写与句后练习"
-  default_prompt: "使用 $ielts-close-reading，将我的阅读全文、题目、作答及提供的方法笔记整理为适合当前水平的精简精读 Word。结合全部原题校准选句，保留全文经典难句、句内考点联系、真实改写与句后练习，答案统一放最后；默认不输出原题考点与快速核对、错题复盘、换材料再判断三个独立章节。"
+  short_description: "制作精简精读 Word，保留长难句、句内考点、同义替换积累与句后练习"
+  default_prompt: "使用 $ielts-close-reading，将我的阅读全文、题目、作答及提供的方法笔记整理为适合当前水平的精简精读 Word。结合全部原题校准选句，保留全文经典难句、句内考点联系、同义替换积累与句后练习，答案统一放最后；默认不输出原题考点与快速核对、错题复盘、换材料再判断三个独立章节。"

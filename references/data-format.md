@@ -1,6 +1,6 @@
 # 构建数据
 
-UTF-8 JSON 是模型编写内容与 Word 排版之间的接口，不要求学习者手工填写。完整可运行示例见 [demo-reader.json](../examples/demo-reader.json)。现有演示 Word 及预览含旧版复盘内容，不代表新的默认章节；重新构建示例数据时采用下述默认规则。
+UTF-8 JSON 是模型编写内容与 Word 排版之间的接口，不要求学习者手工填写。小型格式测试数据见 [reader.json](../tests/fixtures/reader.json)，仅用于脚本校验；实际交付效果见 [C15 Test 2 Passage 1 精简版 v4](../examples/C15_Test2_Passage1_考点精读_精简版_v4.docx)。
 
 `source` 保存本次处理范围内的完整原文，包括未选入精读的句子。这个 JSON 是排版输入；完整题目、正确题作答、答案来源、学习者画像及待确认项保存在相邻工作记录中，后续跨会话复盘时一并读取。不要为了挤进正文而丢失审计上下文。
 
@@ -148,8 +148,8 @@ UTF-8 JSON 是模型编写内容与 Word 排版之间的接口，不要求学习
 ## 校验与运行
 
 ```bash
-python scripts/build_reader.py examples/demo-reader.json --check-only
-python scripts/build_reader.py examples/demo-reader.json --output output/demo.docx
+python scripts/build_reader.py /path/to/reader.json --check-only
+python scripts/build_reader.py /path/to/reader.json --output output/精读.docx
 ```
 
 校验检查字段类型（含 `meta.include_review_sections` 的布尔类型）、必要内容、重复标识、未知引用、`full` 缺失结构示意或练习、检查题与练习 ID 冲突，以及原题答案冲突和改写来源引用等结构问题。它不会判定译文、语法分析、选句适配性、语义同义性或标准答案是否正确，也不会把 `brief` 解释为“已掌握”；这些必须与原文及用户作答人工核对。不要把脚本通过写成教学质量或分数提升的证明。

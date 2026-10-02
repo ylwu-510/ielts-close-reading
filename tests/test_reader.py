@@ -18,7 +18,7 @@ SPEC.loader.exec_module(reader)
 
 class ReaderTests(unittest.TestCase):
     def setUp(self):
-        self.data = json.loads((ROOT / 'examples/demo-reader.json').read_text(encoding='utf-8'))
+        self.data = json.loads((ROOT / 'tests/fixtures/reader.json').read_text(encoding='utf-8'))
 
     def test_originals_remain_continuous_and_answers_follow_all_exercises(self):
         with tempfile.TemporaryDirectory() as temp:
